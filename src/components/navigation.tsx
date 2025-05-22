@@ -5,7 +5,8 @@ import { Disclosure, Menu, Transition } from "@headlessui/react"
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useAuthStore } from "@/store/auth-store"
+// Corrigir a importação usando caminho relativo
+import { useAuthStore } from "../store/auth-store"
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard" },

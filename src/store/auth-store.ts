@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import { createClient } from "@/lib/supabaseClient"
+import { createClient } from "../lib/supabaseClient"
 import type { User } from "@supabase/supabase-js"
 
 interface AuthState {
