@@ -1,19 +1,20 @@
 "use client"
 
-import { Fragment, useEffect } from "react"
+import { Fragment } from "react"
 import { Disclosure, Menu, Transition } from "@headlessui/react"
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-// Corrigir a importação usando caminho relativo
-import { useAuthStore } from "../store/auth-store"
+import { usePathname, useRouter } from "next/navigation"
+import { useAuthStore } from "../store/authStore"
+import { createClient } from "../lib/supabaseClient"
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard" },
-  { name: "Alunos", href: "/alunos" },
-  { name: "Professores", href: "/professores" },
-  { name: "Turmas", href: "/turmas" },
-  { name: "Calendário", href: "/calendario" },
+  { name: "Escolas", href: "/schools" },
+  { name: "Alunos", href: "/students" },
+  { name: "Professores", href: "/teachers" },
+  { name: "Turmas", href: "/classes" },
+  { name: "Calendário", href: "/calendar" },
 ]
 
 function classNames(...classes: string[]) {
@@ -22,11 +23,14 @@ function classNames(...classes: string[]) {
 
 export default function Navigation() {
   const pathname = usePathname()
-  const { user, signOut, checkAuth } = useAuthStore()
+  const router = useRouter()
+  const { user, signOut } = useAuthStore()
+  const supabase = createClient()
 
-  useEffect(() => {
-    checkAuth()
-  }, [checkAuth])
+  const handleSignOut = async () => {
+    await signOut()
+    router.push("/login")
+  }
 
   return (
     <Disclosure as="nav" className="bg-primary-600">
@@ -102,7 +106,7 @@ export default function Navigation() {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            href="/perfil"
+                            href="/profile"
                             className={classNames(active ? "bg-gray-100" : "", "block px-4 py-2 text-sm text-gray-700")}
                           >
                             Seu Perfil
@@ -112,7 +116,7 @@ export default function Navigation() {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            href="/configuracoes"
+                            href="/settings"
                             className={classNames(active ? "bg-gray-100" : "", "block px-4 py-2 text-sm text-gray-700")}
                           >
                             Configurações
@@ -122,7 +126,7 @@ export default function Navigation() {
                       <Menu.Item>
                         {({ active }) => (
                           <button
-                            onClick={() => signOut()}
+                            onClick={handleSignOut}
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block w-full text-left px-4 py-2 text-sm text-gray-700",

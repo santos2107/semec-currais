@@ -7,14 +7,44 @@ import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { useAuthStore } from "@/store/authStore"
 import { createClient } from "@/lib/supabaseClient"
+import { Home, Users, School, BookOpen, Calendar, FileText, Settings } from "lucide-react"
 
-const navigation = [
-  { name: "Dashboard", href: "/dashboard" },
-  { name: "Escolas", href: "/schools" },
-  { name: "Alunos", href: "/students" },
-  { name: "Professores", href: "/teachers" },
-  { name: "Turmas", href: "/classes" },
-  { name: "Calendário", href: "/calendar" },
+export const navigationItems = [
+  {
+    title: "Dashboard",
+    href: "/dashboard",
+    icon: Home,
+  },
+  {
+    title: "Escolas",
+    href: "/schools",
+    icon: School,
+  },
+  {
+    title: "Alunos",
+    href: "/students",
+    icon: Users,
+  },
+  {
+    title: "Professores",
+    href: "/teachers",
+    icon: BookOpen,
+  },
+  {
+    title: "Turmas",
+    href: "/classes",
+    icon: Calendar,
+  },
+  {
+    title: "Documentos",
+    href: "/documents",
+    icon: FileText,
+  },
+  {
+    title: "Configurações",
+    href: "/settings",
+    icon: Settings,
+  },
 ]
 
 function classNames(...classes: string[]) {
@@ -57,9 +87,9 @@ export default function Navigation() {
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
+                    {navigationItems.map((item) => (
                       <Link
-                        key={item.name}
+                        key={item.title}
                         href={item.href}
                         className={classNames(
                           pathname === item.href ? "bg-primary-800 text-white" : "text-white hover:bg-primary-700",
@@ -67,7 +97,7 @@ export default function Navigation() {
                         )}
                         aria-current={pathname === item.href ? "page" : undefined}
                       >
-                        {item.name}
+                        {item.title}
                       </Link>
                     ))}
                   </div>
@@ -146,9 +176,9 @@ export default function Navigation() {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
+              {navigationItems.map((item) => (
                 <Disclosure.Button
-                  key={item.name}
+                  key={item.title}
                   as={Link}
                   href={item.href}
                   className={classNames(
@@ -157,7 +187,7 @@ export default function Navigation() {
                   )}
                   aria-current={pathname === item.href ? "page" : undefined}
                 >
-                  {item.name}
+                  {item.title}
                 </Disclosure.Button>
               ))}
             </div>
